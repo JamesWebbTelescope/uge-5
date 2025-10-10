@@ -124,7 +124,7 @@ class PDFDownloader:
                         result = "Downloaded" # secondary download succeeded
                 else:
                     result = "Downloaded" # main download succeeded
-                    
+
                 with lock: 
                     report_writer.write_to_report(str(br_number), result, output_folder=self.output_folder)
 
@@ -144,7 +144,7 @@ class PDFDownloader:
         print(f"Downloaded {min(number_of_files, len(self.df2))} files using {max_workers} threads in {end_time - start_time:.2f} seconds.")
 
 
-    def delete_downloaded_files(self):
+    def delete_downloaded_files(self) -> None:
         """
         Delete all downloaded PDF files in the download folder.
         Logs errors for individual files and continues deleting others.
@@ -254,10 +254,11 @@ if __name__ == "__main__":
     output_folder = r"C:\Users\SPAC-O-5\source\repos\PDFDownloader\Output"
     main_col = "Pdf_URL"
     secondary_col = "Report Html Address"
-    number_of_files = 50
+    number_of_files = 20
 
     # Writer for reports
     report_writer = ReportWriter()
+    report_writer.clean_report_file(output_folder=output_folder) # Clean report file at start
 
     # Prepare data
     prepare = PreparePdfDownloader(list_pth, output_folder, main_col, secondary_col)

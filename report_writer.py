@@ -2,7 +2,7 @@ import csv
 import os
 
 class ReportWriter:
-    def write_to_report(self, name: str, result: str, output_folder: str, filename: str ="Download_result_report.csv", sep: str =";", clean: bool = False) -> None:
+    def write_to_report(self, name: str, result: str, output_folder: str, filename: str ="Download_result_report.csv", sep: str =";") -> None:
         """
         Write the download result to a report file.
 
@@ -25,9 +25,8 @@ class ReportWriter:
             Exception: For any other unexpected errors.
         """
         try:
-            if(clean):
-                with open(output_folder / filename, 'w', newline='', encoding='utf-8'):
-                    pass # Just open and close to clear the file
+            if not os.path.exists(output_folder / filename):
+                open(output_folder / filename, 'x', newline='', encoding='utf-8').close() # Create the file if it doesn't exist
 
             report_path = output_folder / filename
             with open(report_path, "a", newline="", encoding="utf-8") as csvfile: # Opens the file in append mode
@@ -42,3 +41,31 @@ class ReportWriter:
             print(f"File I/O error when writing report: {file_error}")
         except Exception as e:
             print(f"Unexpected error in write_to_report: {e}")
+    
+    def clean_report_file(self, output_folder: str, filename: str ="Download_result_report.csv") -> None:
+        """
+        Clear the contents of the report file.
+
+        This method opens the specified CSV file and clears its contents. If the file does not exist, it will be created.
+
+        Args:
+            filename (str): The name of the CSV file to clear. Default is "Download_result_report.csv".
+
+        Returns:
+            None
+
+        Raises:
+            OSError: If there are issues opening or writing to the file.
+            IOError: If there are I/O issues during file operations.
+            Exception: For any other unexpected errors.
+        """
+        try:
+            report_path = output_folder / filename
+            with open(report_path, "w", newline="", encoding="utf-8"): # Opens the file in write mode, which clears it
+                pass # Just open and close to clear the file
+
+            print(f"Cleared report file: {report_path}")
+        except (OSError, IOError) as file_error:
+            print(f"File I/O error when clearing report file: {file_error}")
+        except Exception as e:
+            print(f"Unexpected error in clean_report_file: {e}")

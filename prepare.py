@@ -13,7 +13,7 @@ class PreparePdfDownloader:
         self.secondary_col = secondary_col
         self.id_col = id_col
 
-    def prepare_folders_and_find_pdf_duplicates(self):
+    def prepare_folders_and_find_pdf_duplicates(self) -> list[str]:
         """
         Create output and download folders if they don't exist.
         Return a list of existing PDF filenames (without extension) in the download folder.
