@@ -7,7 +7,6 @@ import glob
 import os
 import time
 import concurrent.futures
-import unittest
 
 from prepare import PreparePdfDownloader
 from report_writer import ReportWriter
@@ -249,6 +248,7 @@ class PDFDownloader:
             print(f"Unexpected error in summarize_downloads: {e}")
 
         return summary
+
 
 if __name__ == "__main__":
     list_pth = r"C:\Users\SPAC-O-5\source\repos\PDFDownloader\GRI_2017_2020 (1).xlsx"
