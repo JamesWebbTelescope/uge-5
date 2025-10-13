@@ -63,11 +63,13 @@ It will run all the whole program.
 
 ### Flowchart
 
+```mermaid
 flowchart TD
     A[download_files.py] --> B[prepare.py]
     A --> C[report_writer.py]
 1. download_files.py creates an instance of prepare.py and call the nessesary functions
 2. it then do the same with report_writer.py
+```
 
 prepare.py -> creates and sets paths and opens excel to be read. it also checks for and send info about dublicates.
 
