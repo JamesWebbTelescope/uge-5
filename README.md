@@ -1,8 +1,3 @@
-note:
-
-- fanger individuelle exceptions. men laver ikke andet end at printe fejlen. men der er klar til at håndtere.
-- for sent opdaget dublicates og mærkelig rækkefølge af downloads
-
 # PDFDownloader
 
 PDFDownloader is a modular Python utility designed to streamline the process of preparing, downloading, and reporting on PDF documents sourced from various URLs. It is particularly useful in automated document collection workflows, such as scraping educational resources, reports, or public datasets.
@@ -14,7 +9,6 @@ PDFDownloader is a modular Python utility designed to streamline the process of 
 - Robust PDF downloading with error handling
 - Automatic report generation summarizing successes and failures
 - Easily extensible for different workflows
-
 
 ## Project Structure
 
@@ -29,7 +23,6 @@ PDFDownloader/
 
 - Python 3.8 or later
 - Recommended: virtual environment (venv)
-
 
 **Dependencies**  
 (Make sure to install these if not already listed in a `requirements.txt` or just want to install manually)
@@ -69,6 +62,7 @@ python download_files.py
 It will run all the whole program.
 
 ### Flowchart
+
 flowchart TD
     A[download_files.py] --> B[prepare.py]
     A --> C[report_writer.py]
@@ -81,8 +75,10 @@ report_writer.py -> makes (if the files doesn't exist) the csv file for creating
 
 download_files -> calls the two other classes, downloads, deletes, summerize the download process. also have simple threading
 
-## TODO:
+## TODO
+
 - Cordinate the threadings. right now there is a problem with it sometimes dublicate the last entry of the report
 - Check up on the order of downloads
 - Actually handle the specific exceptions, instead of just catching them.
-- 
+- Make the dependency section in readme.
+- Update requirements
