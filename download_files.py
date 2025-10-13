@@ -7,6 +7,7 @@ import glob
 import os
 import time
 import concurrent.futures
+import unittest
 
 from prepare import PreparePdfDownloader
 from report_writer import ReportWriter
