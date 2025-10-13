@@ -76,4 +76,13 @@ flowchart TD
 2. it then do the same with report_writer.py
 
 prepare.py -> creates and sets paths and opens excel to be read. it also checks for and send info about dublicates.
-report_writer.py -> makes (if the files doesn't exist) the csv file for creating the report. it also fills out the report
+
+report_writer.py -> makes (if the files doesn't exist) the csv file for creating the report. it also fills out the report.
+
+download_files -> calls the two other classes, downloads, deletes, summerize the download process. also have simple threading
+
+## TODO:
+- Cordinate the threadings. right now there is a problem with it sometimes dublicate the last entry of the report
+- Check up on the order of downloads
+- Actually handle the specific exceptions, instead of just catching them.
+- 
