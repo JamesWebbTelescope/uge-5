@@ -138,7 +138,7 @@ class PDFDownloader:
                 print(f"Unexpected error for {br_number}: {traceback.format_exc()}")
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor: # Use ThreadPoolExecutor for multithreading
-            executor.map(download_task, self.df2.index[:number_of_files])
+            executor.map(download_task, self.df2.index[:number_of_files]) #TODO Handle AttributeError for NoneType
 
         end_time = time.perf_counter()
         print(f"Downloaded {min(number_of_files, len(self.df2))} files using {max_workers} threads in {end_time - start_time:.2f} seconds.")
@@ -248,6 +248,7 @@ class PDFDownloader:
             print(f"Unexpected error in summarize_downloads: {e}")
 
         return summary
+
 
 if __name__ == "__main__":
     list_pth = r"C:\Users\SPAC-O-5\source\repos\PDFDownloader\GRI_2017_2020 (1).xlsx"
