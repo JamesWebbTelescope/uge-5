@@ -19,11 +19,11 @@ class test_prepare_pdf(unittest.TestCase):
         del self.prepare_pdf
 
     def test_prepare_and_find(self):
-        self.assertIs(self.prepare_pdf.prepare_folders_and_find_pdf_duplicates(), list) 
+        self.assertIsInstance(self.prepare_pdf.prepare_folders_and_find_pdf_duplicates(), (list)) 
 
     def test_load_and_filter(self):
         exist = self.prepare_pdf.prepare_folders_and_find_pdf_duplicates()
-        self.assertIs(self.prepare_pdf.load_and_filter_excel_data(exist), tuple) 
+        self.assertIsInstance(self.prepare_pdf.load_and_filter_excel_data(exist), (tuple)) 
 
 class test_url_methods(unittest.TestCase):
 
@@ -43,18 +43,19 @@ class test_url_methods(unittest.TestCase):
         mock_url = "http://cdn12.a1.net/m/resources/media/pdf/A1-Umwelterkl-rung-2016-2017.pdf"
         response_success = requests.Response()
         response_success.status_code = '200'
-        with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]):
-            self.assertEqual(self.downloader.download_pdf(mock_url, mock_savepath), [True, ""])
+        with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_download:
+            self.assertEqual(self.downloader.download_pdf(mock_url, mock_savepath), (True, ''))
 
     def test_threading(self):
         #self.assertEqual(self.downloader.process_downloads_threaded(10, 4), None)
         response_success = requests.Response()
         response_success.status_code = '200'
-        with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]):
+        response_success.encoding = 'pdf'
+        with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_threading:
             self.downloader.process_downloads_threaded(10,4)
     
     def test_deletion(self):
-        with patch("glob.glob", return_value = [], side_effect = [Exception, FileNotFoundError, PermissionError]):
+        with patch("glob.glob", return_value = [], side_effect = [Exception, FileNotFoundError, PermissionError]) as mock_deletion:
             self.assertEqual(self.downloader.delete_downloaded_files(), None)
     
     def test_summary(self):
