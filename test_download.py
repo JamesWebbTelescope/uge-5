@@ -42,20 +42,20 @@ class test_url_methods(unittest.TestCase):
         mock_savepath = "C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output"
         mock_url = "http://cdn12.a1.net/m/resources/media/pdf/A1-Umwelterkl-rung-2016-2017.pdf"
         response_success = requests.Response()
-        response_success.status_code = '200'
+        response_success.status_code = 200
         with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_download:
             self.assertEqual(self.downloader.download_pdf(mock_url, mock_savepath), (True, ''))
 
     def test_threading(self):
         #self.assertEqual(self.downloader.process_downloads_threaded(10, 4), None)
         response_success = requests.Response()
-        response_success.status_code = '200'
+        response_success.status_code = 200
         response_success.encoding = 'pdf'
         with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_threading:
             self.downloader.process_downloads_threaded(10,4)
     
     def test_deletion(self):
-        with patch("glob.glob", return_value = [], side_effect = [Exception, FileNotFoundError, PermissionError]) as mock_deletion:
+        with patch("glob.glob", return_value = [], side_effect = [FileNotFoundError, PermissionError, Exception]) as mock_deletion:
             self.assertEqual(self.downloader.delete_downloaded_files(), None)
     
     def test_summary(self):
@@ -72,14 +72,16 @@ class test_report_writer(unittest.TestCase):
     def test_clean_report(self):
         mock_output_folder = "C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output"
         with patch("builtins.open", new_callable=mock_open):
-            self.assertEqual(self.report_writer.clean_report_file(mock_output_folder), None)
+            self.assertEqual(self.report_writer.clean_report_file(output_folder=mock_output_folder), None)
 
     def test_write_report(self):
         mock_output_folder = "C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output"
-        mock_name = "BR50042"
-        mock_result = "Downloaded"
+        mock_name = f"BR50042"
+        mock_result = f"Downloaded"
         with patch("builtins.open", new_callable=mock_open):
             self.assertEqual(self.report_writer.write_to_report(mock_name, mock_result, mock_output_folder), None)
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    with open("C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output/test_report.txt", "w") as f:
+        runner = unittest.TextTestRunner(stream=f, verbosity=2)
+        unittest.main(testRunner=runner, verbosity=2, exit=False)
