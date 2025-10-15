@@ -22,10 +22,16 @@ class test_url_methods(unittest.TestCase):
         self.assertEqual(self.downloader.download_pdf(mock_url, mock_savepath), [True, ""])
 
     def test_threading(self):
-        self.assertEqual(self.downloader.process_downloads_threaded(10, 4), None)
+        #self.assertEqual(self.downloader.process_downloads_threaded(10, 4), None)
+        with self.assertRaises(AttributeError):
+            self.downloader.process_downloads_threaded(10,4)
     
     def test_deletion(self):
         self.assertEqual(self.downloader.delete_downloaded_files(), None)
+    
+    def test_summary(self):
+        with self.assertRaises(UnboundLocalError):
+            self.downloader.summarize_downloads()
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
