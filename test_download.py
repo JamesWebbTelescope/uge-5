@@ -43,18 +43,18 @@ class test_url_methods(unittest.TestCase):
         mock_url = "http://cdn12.a1.net/m/resources/media/pdf/A1-Umwelterkl-rung-2016-2017.pdf"
         response_success = requests.Response()
         response_success.status_code = '200'
-        with patch("requests.get", return_value = response_success, side_effect = requests.exceptions.HTTPError):
+        with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]):
             self.assertEqual(self.downloader.download_pdf(mock_url, mock_savepath), [True, ""])
 
     def test_threading(self):
         #self.assertEqual(self.downloader.process_downloads_threaded(10, 4), None)
         response_success = requests.Response()
         response_success.status_code = '200'
-        with patch("requests.get", return_value = response_success, side_effect = requests.exceptions.HTTPError):
+        with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]):
             self.downloader.process_downloads_threaded(10,4)
     
     def test_deletion(self):
-        with patch("glob.glob", return_value = [], side_effect = Exception):
+        with patch("glob.glob", return_value = [], side_effect = [Exception, FileNotFoundError, PermissionError]):
             self.assertEqual(self.downloader.delete_downloaded_files(), None)
     
     def test_summary(self):
