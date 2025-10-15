@@ -19,11 +19,13 @@ class test_prepare_pdf(unittest.TestCase):
         del self.prepare_pdf
 
     def test_prepare_and_find(self):
-        self.assertIsInstance(self.prepare_pdf.prepare_folders_and_find_pdf_duplicates(), (list)) 
+        with patch("glob.glob", return_value = [], side_effect=[PermissionError, OSError, Exception]):
+            self.assertIsInstance(self.prepare_pdf.prepare_folders_and_find_pdf_duplicates(), (list)) 
 
     def test_load_and_filter(self):
         exist = self.prepare_pdf.prepare_folders_and_find_pdf_duplicates()
-        self.assertIsInstance(self.prepare_pdf.load_and_filter_excel_data(exist), (tuple)) 
+        with patch("glob.glob", return_value = [], side_effect=[PermissionError, OSError, Exception]):
+            self.assertIsInstance(self.prepare_pdf.load_and_filter_excel_data(exist), (tuple)) 
 
 class test_url_methods(unittest.TestCase):
 
@@ -32,8 +34,7 @@ class test_url_methods(unittest.TestCase):
         mock_output_folder = r"C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\output"
         mock_main_col = "Pdf_URL"
         mock_secondary_col = "Report Html Address"
-        with patch("builtins.open", new_callable=mock_open):
-            self.downloader = PDFDownloader(mock_list_path, mock_output_folder, mock_main_col, mock_secondary_col)
+        self.downloader = PDFDownloader(mock_list_path, mock_output_folder, mock_main_col, mock_secondary_col)
 
     def tearDown(self):
         del self.downloader
