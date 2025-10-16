@@ -1,4 +1,5 @@
 import unittest
+import xmlrunner
 from unittest.mock import patch
 from unittest.mock import mock_open
 from download_files import PDFDownloader
@@ -21,11 +22,15 @@ class test_prepare_pdf(unittest.TestCase):
     def test_prepare_and_find(self):
         with patch("glob.glob", return_value = [], side_effect=[PermissionError, OSError, Exception]):
             self.assertIsInstance(self.prepare_pdf.prepare_folders_and_find_pdf_duplicates(), (list)) 
+            with self.assertRaises(tuple([PermissionError, OSError, Exception])):
+                self.prepare_pdf.prepare_folders_and_find_pdf_duplicates()
 
     def test_load_and_filter(self):
         exist = self.prepare_pdf.prepare_folders_and_find_pdf_duplicates()
         with patch("glob.glob", return_value = [], side_effect=[PermissionError, OSError, Exception]):
             self.assertIsInstance(self.prepare_pdf.load_and_filter_excel_data(exist), (tuple)) 
+            with self.assertRaises(tuple([PermissionError, OSError, Exception])):
+                self.prepare_pdf.load_and_filter_excel_data(exist)
 
 class test_url_methods(unittest.TestCase):
 
@@ -45,6 +50,8 @@ class test_url_methods(unittest.TestCase):
         response_success = requests.Response()
         response_success.status_code = 200
         with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_download:
+            with self.assertRaises(tuple([requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema])):
+                self.downloader.download_pdf(mock_url, mock_savepath), (True, '')
             self.assertEqual(self.downloader.download_pdf(mock_url, mock_savepath), (True, ''))
 
     def test_threading(self):
@@ -54,14 +61,17 @@ class test_url_methods(unittest.TestCase):
         response_success.encoding = 'pdf'
         with patch("requests.get", return_value = response_success, side_effect = [requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_threading:
             self.downloader.process_downloads_threaded(10,4)
+            with self.assertRaises(tuple([requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema])):
+                self.downloader.process_downloads_threaded(10,4)
     
     def test_deletion(self):
-        with patch("glob.glob", return_value = [], side_effect = [FileNotFoundError, PermissionError, Exception]) as mock_deletion:
+        with patch("glob.glob", return_value = ["BR50050", "Downloaded"], side_effect = [FileNotFoundError, PermissionError, Exception]) as mock_deletion:
             self.assertEqual(self.downloader.delete_downloaded_files(), None)
+            with self.assertRaises(tuple([FileNotFoundError, PermissionError, Exception])):
+                self.downloader.delete_downloaded_files()
     
     def test_summary(self):
-        with self.assertRaises(UnboundLocalError):
-            self.downloader.summarize_downloads()  
+        self.assertIsInstance(self.downloader.summarize_downloads(), (list(dict(str, str))))
 
 class test_report_writer(unittest.TestCase):
     def setUp(self):
@@ -72,17 +82,18 @@ class test_report_writer(unittest.TestCase):
 
     def test_clean_report(self):
         mock_output_folder = "C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output"
-        with patch("builtins.open", new_callable=mock_open):
+        with patch("builtins.open", new_callable=mock_open) as m:
             self.assertEqual(self.report_writer.clean_report_file(output_folder=mock_output_folder), None)
-
+        
     def test_write_report(self):
         mock_output_folder = "C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output"
         mock_name = f"BR50042"
         mock_result = f"Downloaded"
-        with patch("builtins.open", new_callable=mock_open):
+        with patch("builtins.open", new_callable=mock_open) as m:
             self.assertEqual(self.report_writer.write_to_report(mock_name, mock_result, mock_output_folder), None)
-
+    
 if __name__ == "__main__":
-    with open("C:/Users/SPAC-O-1/Projekter/uge-5/PDFDownloader/output/test_report.txt", "w") as f:
+    with open("test_results.txt", "w") as f:
+        # Redirect the output to the file
         runner = unittest.TextTestRunner(stream=f, verbosity=2)
-        unittest.main(testRunner=runner, verbosity=2, exit=False)
+        unittest.main(testRunner=runner, exit=False)

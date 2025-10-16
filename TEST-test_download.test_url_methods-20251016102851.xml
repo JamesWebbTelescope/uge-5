@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_download.test_url_methods-20251016102851" tests="4" file="test_download.py" time="0.004" timestamp="2025-10-16T10:28:58" failures="2" errors="2" skipped="0">
+	<testcase classname="test_download.test_url_methods" name="test_deletion" time="0.001" timestamp="2025-10-16T10:28:58" file="test_download.py" line="67">
+		<failure type="AssertionError" message="(&lt;class 'FileNotFoundError'&gt;, &lt;class 'PermissionError'&gt;, &lt;class 'Exception'&gt;) not raised"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\test_download.py", line 70, in test_deletion
+    with self.assertRaises(tuple([FileNotFoundError, PermissionError, Exception])):
+AssertionError: (<class 'FileNotFoundError'>, <class 'PermissionError'>, <class 'Exception'>) not raised
+]]></failure>
+		<system-out><![CDATA[Failed to scan download folder: 
+Failed to scan download folder: 
+]]></system-out>
+	</testcase>
+	<testcase classname="test_download.test_url_methods" name="test_download" time="0.001" timestamp="2025-10-16T10:28:58" file="test_download.py" line="47">
+		<failure type="AssertionError" message="(&lt;class 'requests.exceptions.HTTPError'&gt;, &lt;class 'requests.exceptions.ConnectionError'&gt;, &lt;class 'requests.exceptions.MissingSchema'&gt;) not raised"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\test_download.py", line 53, in test_download
+    with self.assertRaises(tuple([requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema])):
+AssertionError: (<class 'requests.exceptions.HTTPError'>, <class 'requests.exceptions.ConnectionError'>, <class 'requests.exceptions.MissingSchema'>) not raised
+]]></failure>
+	</testcase>
+	<testcase classname="test_download.test_url_methods" name="test_summary" time="0.001" timestamp="2025-10-16T10:28:58" file="test_download.py" line="73">
+		<error type="UnboundLocalError" message="cannot access local variable 'summary' where it is not associated with a value"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\test_download.py", line 74, in test_summary
+    self.assertIsInstance(self.downloader.summarize_downloads(), (list(dict(str, str))))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\download_files.py", line 250, in summarize_downloads
+    return summary
+           ^^^^^^^
+UnboundLocalError: cannot access local variable 'summary' where it is not associated with a value
+]]></error>
+		<system-out><![CDATA[AttributeError: DataFrame 'df2' is not loaded. Please run load_excel() first.
+]]></system-out>
+	</testcase>
+	<testcase classname="test_download.test_url_methods" name="test_threading" time="0.001" timestamp="2025-10-16T10:28:58" file="test_download.py" line="57">
+		<error type="AttributeError" message="'NoneType' object has no attribute 'index'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\test_download.py", line 63, in test_threading
+    self.downloader.process_downloads_threaded(10,4)
+  File "C:\Users\SPAC-O-1\Projekter\uge-5\PDFDownloader\download_files.py", line 141, in process_downloads_threaded
+    executor.map(download_task, self.df2.index[:number_of_files]) #TODO Handle AttributeError for NoneType
+                                ^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'index'
+]]></error>
+	</testcase>
+</testsuite>
