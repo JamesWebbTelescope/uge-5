@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_download.test_report_writer-20251016110041" tests="2" file="test_download.py" time="0.008" timestamp="2025-10-16T11:00:48" failures="0" errors="0" skipped="0">
+	<testcase classname="test_download.test_report_writer" name="test_clean_report" time="0.000" timestamp="2025-10-16T11:00:48" file="test_download.py" line="83">
+		<system-out><![CDATA[Unexpected error in clean_report_file: unsupported operand type(s) for /: 'str' and 'str'
+]]></system-out>
+	</testcase>
+	<testcase classname="test_download.test_report_writer" name="test_write_report" time="0.008" timestamp="2025-10-16T11:00:48" file="test_download.py" line="88">
+		<system-out><![CDATA[Unexpected error in write_to_report: unsupported operand type(s) for /: 'str' and 'str'
+]]></system-out>
+	</testcase>
+</testsuite>
