@@ -52,7 +52,6 @@ class test_url_methods(unittest.TestCase):
         #self.assertEqual(self.downloader.process_downloads_threaded(10, 4), None)
         response_success = requests.Response()
         response_success.status_code = 200
-        response_success.encoding = 'pdf'
         with patch("requests.get", return_value = response_success, side_effect = [response_success, requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema]) as mock_threading:
             self.downloader.process_downloads_threaded(10,4)
             with self.assertRaises(tuple([requests.exceptions.HTTPError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema])):
