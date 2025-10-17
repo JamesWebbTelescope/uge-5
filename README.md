@@ -1,14 +1,21 @@
-# PDFDownloader
+# Test of PDFDownloader
+This is a fork of PDFDownloader. It provides unit tests and integration test for all the different function in the project.
 
 PDFDownloader is a modular Python utility designed to streamline the process of preparing, downloading, and reporting on PDF documents sourced from various URLs. It is particularly useful in automated document collection workflows, such as scraping educational resources, reports, or public datasets.
 
 ## Features
 
+### PDFDownloader
 - Modular design with clear separation of concerns
 - URL preparation and parsing from configurable sources
 - Robust PDF downloading with error handling
 - Automatic report generation summarizing successes and failures
 - Easily extensible for different workflows
+
+### Unit tests
+- Unit tests for all different functions in the project.
+- Unit tests are separated by patching from all external resources.
+- Integration tests for all functionality in the project.
 
 ## Project Structure
 
@@ -17,6 +24,8 @@ PDFDownloader/
 - prepare.py # Gathers and prepares list of PDF links
 - download_files.py # Downloads PDFs from prepared list
 - report_writer.py # Generates report on download outcome
+- test_download.py # Runs unit tests on all functions.
+- test_integration.py # Integration tests for all functions
 - requirements.txt
 
 ## Requirements
