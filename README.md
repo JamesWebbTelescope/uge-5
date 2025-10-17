@@ -48,7 +48,7 @@ pip install unittest
 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Marcusvh/PDFDownloader.git
+git clone https://github.com/JamesWebbTelescope/uge-5.git
 cd PDFDownloader
 ```
 
@@ -72,6 +72,16 @@ python download_files.py
 ```
 
 It will run all the whole program.
+
+```python
+python -m unittest test_download.py -v
+```
+This will run unit tests on all the different functions in the program
+
+```python
+ python -m unittest test_integration.py -v
+```
+This will run the integration tests for the entire program
 
 ### Flowchart
 
