@@ -39,6 +39,9 @@ PDFDownloader/
 ```bash
 pip install requests
 ```
+```bash
+pip install unittest
+````
 
 ## Getting Started
 
