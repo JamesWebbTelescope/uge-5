@@ -107,3 +107,7 @@ download_files -> calls the two other classes, downloads, deletes, summerize the
 - Actually handle the specific exceptions, instead of just catching them.
 - Make the dependency section in readme.
 - Update requirements
+
+## Authors
+- Marcus VH
+- Viktor From
