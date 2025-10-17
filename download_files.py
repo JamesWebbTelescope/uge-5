@@ -126,7 +126,7 @@ class PDFDownloader:
                     result = "Downloaded" # main download succeeded
 
                 with lock: 
-                    report_writer.write_to_report(str(br_number), result, output_folder=self.output_folder)
+                    report_writer.write_to_report(str(br_number), result, output_folder=self.output_folder) #TODO Include a report_writer object
 
             except KeyError as e:
                 with lock:
