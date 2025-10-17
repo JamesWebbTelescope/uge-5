@@ -49,7 +49,7 @@ class test_prepare(unittest.TestCase):
         self.assertIsInstance(df2, pd.DataFrame)
         self.assertEqual(self.downloader.delete_downloaded_files(), None)
         self.assertEqual(self.downloader.process_downloads_threaded(self.number_of_files, max_workers=8), None)
-        self.assertEqual(self.downloader.summarize_downloads(self.number_of_files), (list(dict([str, str]))))
+        self.assertEqual(self.downloader.summarize_downloads(self.number_of_files), (list(dict())))
 
 if __name__ == '__main__':
     unittest.main()
